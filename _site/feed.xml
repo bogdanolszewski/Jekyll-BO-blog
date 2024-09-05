@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-09-05T11:27:42+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Bogdan Olszewski - Data analysis blog</title><subtitle>Welcome to my Page! You can find here information about me and my professional experience. I publish posts here regarding Business Intelligence, Data Analysis and Data Science. Ocassionally I will also write about other topics that I find interesting.</subtitle><entry><title type="html">Welcome to Jekyll!</title><link href="http://localhost:4000/jekyll/update/2024/09/05/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2024-09-05T10:14:36+02:00</published><updated>2024-09-05T10:14:36+02:00</updated><id>http://localhost:4000/jekyll/update/2024/09/05/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2024/09/05/welcome-to-jekyll.html"><![CDATA[<p>You’ll find this post in your <code class="language-plaintext highlighter-rouge">_posts</code> directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run <code class="language-plaintext highlighter-rouge">jekyll serve</code>, which launches a web server and auto-regenerates your site when a file is updated.</p>
+
+<p>Jekyll requires blog post files to be named according to the following format:</p>
+
+<p><code class="language-plaintext highlighter-rouge">YEAR-MONTH-DAY-title.MARKUP</code></p>
+
+<p>Where <code class="language-plaintext highlighter-rouge">YEAR</code> is a four-digit number, <code class="language-plaintext highlighter-rouge">MONTH</code> and <code class="language-plaintext highlighter-rouge">DAY</code> are both two-digit numbers, and <code class="language-plaintext highlighter-rouge">MARKUP</code> is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.</p>
+
+<p>Jekyll also offers powerful support for code snippets:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">print_hi</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+  <span class="nb">puts</span> <span class="s2">"Hi, </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">end</span>
+<span class="n">print_hi</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">)</span>
+<span class="c1">#=&gt; prints 'Hi, Tom' to STDOUT.</span></code></pre></figure>
+
+<p>Check out the <a href="https://jekyllrb.com/docs/home">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/jekyll/jekyll">Jekyll’s GitHub repo</a>. If you have questions, you can ask them on <a href="https://talk.jekyllrb.com/">Jekyll Talk</a>.</p>]]></content><author><name></name></author><category term="jekyll" /><category term="update" /><summary type="html"><![CDATA[You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when a file is updated.]]></summary></entry><entry><title type="html">Taming requirements in Power BI</title><link href="http://localhost:4000/powerbi/2024/09/02/Power-bi-tips.html" rel="alternate" type="text/html" title="Taming requirements in Power BI" /><published>2024-09-02T00:00:00+02:00</published><updated>2024-09-02T00:00:00+02:00</updated><id>http://localhost:4000/powerbi/2024/09/02/Power-bi-tips</id><content type="html" xml:base="http://localhost:4000/powerbi/2024/09/02/Power-bi-tips.html"><![CDATA[<p><strong>Introduction</strong> <br /><br />
+Working with complex customer requirements can not only be a technical DAX challenge, but also a large effort related to planning of the development of the Power BI data model / data set. <br /><br /></p>
+
+<p>In your Power BI journey you will encounter various approaches to problem modelling, and many calculations with logic you might consider odd. For example, if you had previous experience in SQL, you might be tempted to write calculated columns, or use DAX in a way that is not optimal for performance.If, on the other hand, you’re a python programmer, you might be consider writing a function that does the same thing as built-in DAX function. <br /><br /></p>
+
+<p>Some developers do not write any DAX and just use built-in aggregations provided by Power BI Desktop. While that is a good approach for beginners, it is not considered a best practice in the industry. Some will create multiple calculated columns, and use those in measures. That is what I found myself doing in the beginning quite a lot, and there are quite many scenarios, where a calculaed column is indeed necessary, but this won’t be covered in this post. <br /><br /></p>
+
+<p>And finally you have people who would write measures organized in a ‘Measures’ folder/table, and use variables to simplify the DAX (by far the most sensible approach, endorsed by many professionals). <br /><br /></p>
+
+<p>While those approaches may appear very similar, they differ substantially in terms of how Power BI does these calculations and comes up with results. DAX is a language that relies  on ‘row’ or ‘filter’ context, that means you can either navigate in your expressions like, for instance, in excel (‘row’ context) or work on multiple related tables at once, like you would in relational database (‘filter’ context). <br /><br /></p>
+
+<p><strong>Consequences of speeding things up</strong> <br /><br />
+In the introduction mentioned creating calculated columns and using those in measures or other calculations. While that may not be the worst approach, performance-wise, it makes your data model gain weight (Megabytes of weight, in fact). Depending on the volume of data you’re dealing with, it might be worth avoiding calculated columns. <br />
+Writing DAX measures exclusively is a perfect world scenario, which we don’t live in. In All branches of industry doing analytics and reporting, the data is so disparate, that one, by-the-book modelling approach does not apply to all real-life scenarios. On top of that, we often have to deal with technical debt, which is a result of not having enough time to implement the best practices. <br /><br /></p>
+
+<p>Some calculations your end users might want to see, like running totals, ‘lag’ calculations, or partitioning are easier to achieve in your Data Warehouse (DWH). The Power BI team at Microsoft is working on delivering more DAX functions to Power BI Desktop, however it may take a while for them to finally appear. <br /><br />
+In some scenarios, it may be better to prepare a view, with your desired calculations as per the customer’s requirements. A view is essentially a table that only exists as a script, saved in your DWH or data mart. When the script is invoked, the table is served to the user or person calling the script, thus only putting load on the DB engine when in use. When choosing this approach, it is important to keep in mind, that for Power BI reporting you must consider the data types of key attributes like dates, or other columns that will serve as the foundations of DAX expressions.</p>
+
+<p><strong>Simplify DAX</strong> <br /><br />
+(using variables &amp; return, using lesser-known functions, splitting calculations into steps with examples)
+Many will agree, that the first, unspoken rule of DAX inside Power BI is to ‘Keep it simple’ .
+But, in order to ‘Keep it simple’, one must first understand the axioms and inner workings of Power BI to a certain extent.
+If your team has a data engineer, ask him/her to perform some of those transformations, and serve the data as a view. Some are difficult to achieve in DAX or very verbose, leading to more lines of code, which we ultimately don’t want, as that will be harder to maintain. <br />
+Furthermore, it is not a bad idea to introduce variables into your DAX measure. Variables are created in the following way:</p>
+
+<pre><code class="language-DAX">VAR myVariable = CALCULATE(SUM('Table'[Column]), 'Table'[Column] = "Value")
+</code></pre>
+
+<p>Doing this greatly improves readability of DAX code. Note, that in order to use variables, you must then use a ‘RETURN’ statement at the end of your measure (The keyboard shortcut to break lines in DAX is shift+enter / alt+enter). Like so:</p>
+
+<pre><code class="language-DAX">VAR myVariable = CALCULATE(SUM('Table'[Column]), 'Table'[Column] = "Value")
+RETURN DIVIDE( myVariable, 10, 0)
+</code></pre>
+
+<p>Putting down your thought process on paper might help you understand which parts of your thought process can be treated as variables. Proper formatting – using indentation on nested functions – is always welcome. There is even an online tool you might use for that <a href="https://www.daxformatter.com/">DAX Formatter</a>.</p>
+
+<p><strong>Handling relationships, cardinality &amp; cross-filter direction</strong> <br /><br />
+In PBI, users need to be aware that relationships are an inseparable part of the data model. Consciously creating those relationships with the right parameters can be a challenge even for experienced developers. Under no conditions should we try to evade relationships, as they are the backbone of the data model. <br /><br />
+Cardinality in Power BI refers to the relationship between tables in a data model. It determines how rows in one table are related to rows in another table. 
+There are three types of cardinality in Power BI:</p>
+<ul>
+  <li><strong>One-to-One</strong>: Each row in one table is related to exactly one row in another table. <br /><br /></li>
+  <li><strong>One-to-Many</strong>: Each row in one table can be related to multiple rows in another table, but each row in the other table is related to only one row in the first table. <br />
+ <strong>Example</strong>: A customer can have multiple orders, but each order is associated with only one customer. <br /><br /></li>
+  <li><strong>Many-to-Many</strong>: Each row in one table can be related to multiple rows in another table, and each row in the other table can be related to multiple rows in the first table. <br />
+ <strong>Example</strong>: A student can enroll in multiple courses, and a course can have multiple students. <br /><br />
+ Establishing the correct cardinality is crucial for creating accurate relationships and performing effective data analysis in Power BI.</li>
+</ul>
+
+<!-- 
+Title: Power BI Tips
+Filepath: /d:/jekyll-projects/DrBo/_posts/2024-09-02-Power-bi-tips.markdown
+Description: This article discusses the concept of bidirectional filtering in Power BI models and provides tips on when to consider using it.
+-->
+
+<!-- 
+For more information on bidirectional filtering in Power BI, you can refer to the official Microsoft documentation: 
+
+-->
+<p>As we develop power BI models, we sometimes forget to consider the need of <a href="https://docs.microsoft.com/en-us/power-bi/transform-model/desktop-bidirectional-filtering">Bidirectional filtering</a>. 
+This feature allows both tables on either side of the relationship to filter one another. However, this reduces overall report performance. This is not always necessary in reports, therefore it is worth setting the cross-filter direction to ‘single’, where requirements allow.</p>
+
+<p><strong>Other aspects of performance</strong><br />
+While the points above are more or less ordered by importance, there is one more aspect that should not be overlooked, and that is performance. In a whirlwind of DAX writing and visual creation we often forget about the performance of our report. <br /></p>
+
+<p>Guidelines for keeping performance at a acceptable level include: <br /></p>
+<ul>
+  <li>reducing or controlling the amount of visuals on your page,</li>
+  <li>don’t reinvent the wheel: use built-in DAX functions,</li>
+  <li>occasionally, fire up the performance analyzer, to optimize your report.</li>
+</ul>
+
+<p><strong>Optimizing visuals</strong><br />
+Ask yourself the following questions: <br /><br />
+<em>What is this page trying to tell me?</em> <br />
+<em>Are the visuals on this page related and interactive?</em> <br />
+<em>‘Can this page be read from left to right?</em> <br /></p>
+
+<p>and so on.</p>
+
+<p>Be aware that DAX offers a breadth of functions, which are often overlooked. For reference you may find more information on <a href="https://dax.guide/">DAX Guide</a>, which is written and updated by SQLBI, a company specializing in Business Intelligence and SQL, holding many developer events anually. <br />
+Here are some examples of functions that are very useful: <br /><br />
+<code class="language-plaintext highlighter-rouge">CALENDAR()</code>, <code class="language-plaintext highlighter-rouge">SAMEPERIODLASTYEAR()</code>, <code class="language-plaintext highlighter-rouge">PARALLELPERIOD()</code>, <code class="language-plaintext highlighter-rouge">DATESYTD()</code>, <code class="language-plaintext highlighter-rouge">DIVIDE()</code>, <code class="language-plaintext highlighter-rouge">CONCATENATEX()</code>, <code class="language-plaintext highlighter-rouge">DATESBETWEEN()</code>, <code class="language-plaintext highlighter-rouge">DATESINPERIOD()</code>, <code class="language-plaintext highlighter-rouge">EOMONTH()</code>, <code class="language-plaintext highlighter-rouge">FIRSTNONBLANK()</code>, <code class="language-plaintext highlighter-rouge">HASONEVALUE()</code>, <code class="language-plaintext highlighter-rouge">SELECTEDVALUE()</code>, <code class="language-plaintext highlighter-rouge">ISCROSSFILTERED()</code></p>
+
+<p>and many more… <br /><br />
+<strong>Organize your measures</strong> <br />
+When your data model grows quickly, and new measures are added, that’s where things start to get difficult to manage. You may have measures referencing other measures, which reference other measures. In order to make life a bit easier for the next person, organize your DAX calculations into a table called ‘Measures’. Such a table can be created with the following code, when creating a new table:</p>
+<pre><code class="language-DAX">_Measures = {1,1} //creates a table with only one value, meant to store measures
+</code></pre>
+
+<p>Now, you can put your measures into this table by right-clicking on its name in the table list, and selecting ‘new measure’. This, single-handedly makes picking up your report much faster, thus reducing amount of time spent on implementing changes. Power BI is developing a tool called ‘Model Explorer’, which will prove handy for this particular purpose in the future. <br /><br />
+<strong>Naming conventions</strong> <br />
+Finally, on top of the aforementioned suggestions, you may want to implement a naming convention into your measures. If you have measures referencing other measures, consider giving them a number, based on the hierarchy of reference.Or you could address the matter differently, by naming your measures according to what they do. Give names, that describe what the measure does, trying, as a rule of thumb, not to exceed 20 characters.</p>
+
+<p>Use abbreviations like ‘avg’, ‘cnt’, ‘agg’, ‘fst’ (first), ‘lst’ (last), ‘CY’ (calendar year), ‘PY’ ( Previous year), ‘SPLY’ (<code class="language-plaintext highlighter-rouge">SAMEPERIODLASTYEAR()</code>() ), ‘SV’ (<code class="language-plaintext highlighter-rouge">Selectedvalue()</code> ), ‘HOV’ (<code class="language-plaintext highlighter-rouge">Hasonevalue()</code> ) etc…</p>]]></content><author><name></name></author><category term="PowerBI" /><summary type="html"><![CDATA[Introduction Working with complex customer requirements can not only be a technical DAX challenge, but also a large effort related to planning of the development of the Power BI data model / data set.]]></summary></entry></feed>
