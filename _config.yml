@@ -23,7 +23,7 @@ email: bogdanolszewski00@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   Welcome to my Page! You can find here information about me and my professional experience. I publish posts here regarding Business Intelligence, Data Analysis and Data Science.
   Ocassionally I will also write about other topics that I find interesting.
-baseurl: /PROJECT # the subpath of your site, e.g. /blog
+baseurl: /JEKYLL-BO-BLOG # the subpath of your site, e.g. /blog
 # domain: my-site.github.io 
 url: http://bogdanolszewski.github.io # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jekyllrb
